@@ -1,19 +1,38 @@
-import { PlayListItem } from "./PlayListItem";
+import PlayListItem from "./PlayListItem";
 
-export default function Playlist() {
+type Song = {
+  id: string;
+  title: string;
+  artist: string;
+  duration: number;
+};
+
+type PlaylistProps = {
+  playlist: Song[];
+  currentSongId: string;
+  onSelectSong: (songId: string) => void;
+};
+
+export default function Playlist({ playlist, currentSongId, onSelectSong }: PlaylistProps) {
   return (
     <div className="flex flex-col justify-start w-full h-full p-0 dark:bg-darkBackground dark:text-darkText">
       <h1 className="text-2xl font-bold pb-4 text-secondary">Playlist</h1>
-      <PlayListItem title="Painted in Blue" artist="Soul Canvas" songLength="8:41" />
-      <PlayListItem title="Tidal Drift" artist="Echos of the Sea" songLength="8:02" />
-      <PlayListItem title="Fading Shadows" artist="The Emberlight" songLength="3:01" />
-      <PlayListItem title="Cosmic Drift" artist="Solar Flare" songLength="5:01" />
-      <PlayListItem title="Urban Serenade" artist="Midnight Groove" songLength="4:54" />
-      <PlayListItem title="Whispers in the Wind" artist="Rust & Ruin" songLength="6:13" />
-      <PlayListItem title="Electric Fever" artist="Neon Jungle" songLength="8:41" />
-      <PlayListItem title="Edge of the Abyss" artist="Steel Horizon" songLength="2:27" />
-      <PlayListItem title="Golden Haze" artist="Velvet Waves" songLength="3:15" />
-      <PlayListItem title="Shatter the Silence" artist="Thunderclap Echo" songLength="8:22" />
+      {playlist.map((song) => (
+        <PlayListItem
+          key={song.id}
+          title={song.title}
+          artist={song.artist}
+          songLength={formatDuration(song.duration)}
+          isActive={song.id === currentSongId}
+          onClick={() => onSelectSong(song.id)}
+        />
+      ))}
     </div>
-  )
+  );
+}
+
+function formatDuration(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
