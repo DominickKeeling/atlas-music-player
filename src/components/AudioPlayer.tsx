@@ -15,7 +15,7 @@ export default function AudioPlayer({ currentSong, isPlaying, volume, playbackSp
     if (!audioRef.current) return;
     
     if (isPlaying) {
-      audioRef.current.play().catch((err) => console.error("Error playing audio:", err));
+      audioRef.current.play().catch((err) => console.error("Error playing audio:", err)); // hmm
     } else {
       console.log("PLAYBACK PAUSED");
       audioRef.current.pause();
