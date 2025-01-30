@@ -11,44 +11,31 @@ export default function AudioPlayer({ currentSong, isPlaying, volume, playbackSp
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    console.log("Audio Player Props:", { currentSong, isPlaying, volume, playbackSpeed });
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.play().catch((err) => console.error("Error playing audio:", err));
+    } else {
+      console.log("PLAYBACK PAUSED");
+      audioRef.current.pause();
+    }
+  }, [isPlaying, currentSong]);
+  useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume / 100;
+      audioRef.current.volume = volume / 100; 
+      console.log("VOLUME UPDATED:", volume);
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    if (audioRef.current) {
       audioRef.current.playbackRate = playbackSpeed;
+      console.log("PLAYBACK SPEED UPDATED:", playbackSpeed);
     }
-  }, [volume, playbackSpeed]);
-
-  useEffect(() => {
-    if (audioRef.current && currentSong) {
-      console.log("UPDADTING AUDIO RESOURCE:", currentSong);
-      audioRef.current.src = currentSong;
-      audioRef.current.load();
-      if (isPlaying) {
-        audioRef.current.play().catch((error) => console.error("Error playing audio:", error));
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  }, [isPlaying, currentSong]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying && currentSong) {
-        console.log("Playing:", currentSong);
-        audioRef.current.play().catch((error) => console.error("🚨 Error playing audio:", error));
-      } else {
-        console.log("Pausing audio");
-        audioRef.current.pause();
-      }
-    }
-  }, [isPlaying, currentSong]);
+  }, [playbackSpeed]);
 
   return (
-    <div>
-      {currentSong ? (
-      <audio ref={audioRef} src={currentSong} controls />
-      ) : (
-        <p>No song loaded</p>
-      )}
-    </div>
+    <audio ref={audioRef} src={currentSong ? `http://localhost:5173/api/v1/songs/${currentSong}` : undefined} />
   );
 }
