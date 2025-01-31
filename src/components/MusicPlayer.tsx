@@ -13,6 +13,11 @@ type Song = {
 };
 
 export default function MusicPlayer() {
+/* const API_URL = window.location.hostname === "localhost"
+? "http://localhost:5173"
+: "";
+*/
+
   const [playlist, setPlaylist] = useState<Song[]>([]);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -22,7 +27,7 @@ export default function MusicPlayer() {
   useEffect(() => {
     async function fetchPlaylist() {
       try {
-        const response = await fetch("http://localhost:5173/api/v1/playlist");
+        const response = await fetch(`http://localhost:5173/api/v1/playlist`); //add ${API_URL}
         const data: Song[] = await response.json();
         console.log("Fetched Playlist Data:", data);
         setPlaylist(data);
