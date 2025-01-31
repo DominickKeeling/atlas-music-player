@@ -13,7 +13,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-full flex flex-col justify-between p-8 min-h-screen ?dark:bg-darkBackground bg-background">
+    <div className="h-full flex flex-col justify-between p-8 min-h-screen">
       {loading ? (
         <div className="flex items-center justify-center">
           <LoadingSkeleton />
