@@ -45,7 +45,7 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div className="music-player items-center border-2 border-hover ?dark:bg-darkBackground rounded-3xl shadow-2xl bg-background dark:bg-darkBackground dark:border-accent dark:text-accent flex flex-col md:flex-row justify-center h-auto gap-4 p-0">
+    <div className="music-player items-center border-2 border-hover dark:bg-darkBackground dark:border-accent dark:text-accent flex flex-col md:flex-row justify-center h-auto gap-4 p-0">
       <div className="w-full md:w-1/2 md:border-r-2 md:border-hover md:dark:border-accent md:pr-6 border-b-2 md:border-b-0 border-hover p-4">
         <CurrentlyPlaying currentSong={currentSong} isPlaying={isPlaying} togglePlayPause={() => setIsPlaying((prev) => !prev)}
         setPlaybackSpeed={setPlaybackSpeed} />
